@@ -1,5 +1,9 @@
 package Sistema;
-
+/**
+ * 
+ * @author villalvan
+ *
+ */
 public final class TipoClima {
 	private String clima;
 	

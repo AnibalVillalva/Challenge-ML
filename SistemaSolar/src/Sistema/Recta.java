@@ -1,5 +1,9 @@
 package Sistema;
-
+/**
+ * 
+ * @author villalvan
+ *
+ */
 public class Recta {
 	Punto p1;
 	Double pendiente;

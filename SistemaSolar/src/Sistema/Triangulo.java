@@ -1,5 +1,9 @@
 package Sistema;
-
+/**
+ * 
+ * @author villalvan
+ *
+ */
 public class Triangulo {
 	Posicion a;
 	Posicion b;
@@ -12,6 +16,10 @@ public class Triangulo {
 		perimetro = a.distancia(b) + a.distancia(c) + b.distancia(c);
 	}
 	
+	/**
+	 * 
+	 * @return Determina si el triangulo contiene al origen. 
+	 */
 	public Boolean contieneOrigen(){
 		/*
 		 * Solo se esta teniendo en cuenta un triangulo que tiene un vertice 1 en el origen.
@@ -29,6 +37,10 @@ public class Triangulo {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @return Devuelve el perimetro. 
+	 */
 	public Double getPerimetro(){
 		return perimetro;
 	}

@@ -1,27 +1,32 @@
 package Sistema;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * 
+ * @author villalvan
+ *
+ */
 public class SistemaMeteorologico {	
-
-	private static ArrayList<Integer> diasDeLluviaIntensa = new ArrayList<Integer>(); 
-	 
+ 
+	/**
+	 * Es la funcion principal que se encarga de recorrer los dias y determinar el clima.
+	 * @param args
+	 */
 	public static void main (String [ ] args) {
-	
+		ArrayList<Integer> diasDeLluviaIntensa = new ArrayList<Integer>();
+		Map<TipoClima,Integer> PeriodosClimaticos = new HashMap<TipoClima,Integer>();
+		ArrayList<ClimaDia> clima = new ArrayList<ClimaDia>();
+		
 		Double PerimetroMaximo = 0.0;
 		Double PerimetroActual = 0.0;
 		Integer diaLluviaIntenso =0;
 		Integer fecha = 0;
 		Integer fechaAnterior = 0;
 		
-		Exportador exportar = new Exportador("C:\\D\\clima.json");
-		
-		ArrayList<ClimaDia> clima = new ArrayList<ClimaDia>();
+		Exportador exportar = new Exportador(".\\clima.json");
 
-		Map<TipoClima,Integer> PeriodosClimaticos = new HashMap<TipoClima,Integer>();
 		PeriodosClimaticos.put(TipoClima.LLUVIA, 0);
 		PeriodosClimaticos.put(TipoClima.OPTIMO, 0);
 		PeriodosClimaticos.put(TipoClima.SEQUIA, 0);
@@ -33,14 +38,15 @@ public class SistemaMeteorologico {
 		TipoClima climaDia = TipoClima.DEFAULT;
 	    TipoClima climaActual = TipoClima.DEFAULT;
 	    TipoClima climaAnterior = TipoClima.DEFAULT;
-	    
+	    // Ferengi
 	    sistemaSolar = new SistemaSolar(new Posicion(5E5, 0.0), 1.0 );
+	    // Betasoide
 	    sistemaSolar.agregarPlaneta(new Posicion(2E6, 0.0), 3.0 );
+	    // Vulcano
 	    sistemaSolar.agregarPlaneta(new Posicion(1E6, 0.0), -5.0 );
 	      		
 	    
-   		//while (Tiempo.getMinutos()<10*Tiempo.ANIOENMIN){
-	    while (Tiempo.getMinutos()<180*Tiempo.DIAENMIN){
+   		while (Tiempo.getMinutos()<10*Tiempo.ANIOENMIN){
 	    	fecha = Tiempo.getDia();
 	    	climaActual = determinarTipoClima(sistemaSolar);
 	    	 
@@ -83,7 +89,7 @@ public class SistemaMeteorologico {
 	    	 * Ademas sabiendo que no puede haber en el mismo dia un caso de sequia y optimo, 
 	    	 * solo se tiene en cuenta que no sea de lluvia y default.  
 	    	 */
-	    	if(fechaAnterior == fecha){
+	    	if(fechaAnterior.equals(fecha)){
 	    		if(climaDia != climaActual &&
 	    		   (climaActual != TipoClima.LLUVIA || climaActual != TipoClima.DEFAULT)){
 	    				climaDia = climaActual;
@@ -92,12 +98,18 @@ public class SistemaMeteorologico {
 	    	else{ // Cambio de dia. Guardo el clima del dia de ayer.
 	    		clima.add(new ClimaDia(fecha-1,climaDia));
 	    		climaDia = climaActual;
-	    		}
+	    	}
 
 	    	climaAnterior = climaActual;
 	    	sistemaSolar.actualizarT();
 	    	fechaAnterior = fecha;
 	    }
+   		
+   		// En caso que el ultimo dia medido sea de lluvia, se guarda el dia de lluvia intensa.
+   		if (climaActual == TipoClima.LLUVIA){
+   			diasDeLluviaIntensa.add(diaLluviaIntenso);
+   		}
+   			
 
 	    System.out.println("Periodos de " + TipoClima.SEQUIA+": "+PeriodosClimaticos.get(TipoClima.SEQUIA));
 	    System.out.println("Periodos de " + TipoClima.LLUVIA+": "+PeriodosClimaticos.get(TipoClima.LLUVIA));

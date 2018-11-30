@@ -1,5 +1,9 @@
 package Sistema;
-
+/**
+ * 
+ * @author villalvan
+ *
+ */
 public class ClimaDia {
 
 	Integer dia;

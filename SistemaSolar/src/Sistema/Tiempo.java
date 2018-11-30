@@ -15,6 +15,7 @@ public class Tiempo {
 	public static final Integer DELTAT = 120;
 	public static final Integer DIAENMIN = 1440;
 	public static final Integer ANIOENMIN = DIAENMIN*365;
+	
 	private Tiempo (){
 		minutos = new Integer(0);
 	}
@@ -25,18 +26,33 @@ public class Tiempo {
 		}
 		return tiempo;
 	}
-	
+	/**
+	 * Actualiza el tiempo en el Delta de T determinado en minutos. 
+	 */
 	public static void Actualizar(){
 		Tiempo.minutos += DELTAT;
 	}
 	
+	/**
+	 * Setea el tiempo actual en minutos. 
+	 * @param minutos
+	 */
 	public static void setMinutos(Integer minutos){
 		Tiempo.minutos = minutos;
 	}
 	
+	/**
+	 * Calcula el dia de acuerdo a los minutos transcurridos. 
+	 * @return Devuelve el dia (Entero)
+	 */
 	public static Integer getDia(){
 		return minutos/DIAENMIN;
 	}
+	
+	/**
+	 * 
+	 * @return Deveuelve el tiempo transcurrido en minutos. 
+	 */
 	public static Integer getMinutos(){
 		return minutos;
 	}
