@@ -32,9 +32,7 @@ public class Exportador {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		try (FileWriter writer = new FileWriter(path)) {
-			for(ClimaDia dia : dias){
-				gson.toJson(dia, writer);
-			}
+				gson.toJson(dias, writer);
 
 		} catch (IOException e) {
 			e.printStackTrace();
